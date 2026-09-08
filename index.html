@@ -461,7 +461,7 @@ function renderApp() {
   `;
 
   if (featured && !q && !state.activeCategory) {
-    const heroCover = featured.coverImage || getYoutubeThumbnail(featured.videoUrl);
+    const heroCover = getYoutubeThumbnail(featured.videoUrl) || featured.coverImage;
     if (heroCover) document.getElementById("hero-el").style.backgroundImage = `url("${heroCover}")`;
   }
   document.querySelectorAll(".conf-thumb[data-cover]").forEach(elm => {
@@ -475,7 +475,7 @@ function renderApp() {
 function renderCardHtml(c) {
   return `
     <button class="conf-card" onclick="openConf('${c.id}')">
-      <div class="conf-thumb" data-cover="${escapeHtml(c.coverImage || getYoutubeThumbnail(c.videoUrl))}">${c.coverImage || getYoutubeThumbnail(c.videoUrl) ? "" : "Pas d'image"}</div>
+      <div class="conf-thumb" data-cover="${escapeHtml(getYoutubeThumbnail(c.videoUrl) || c.coverImage)}">${getYoutubeThumbnail(c.videoUrl) || c.coverImage ? "" : "Pas d'image"}</div>
       <div class="conf-info">
         <div class="title">${escapeHtml(c.title)}</div>
         <div class="cat">${escapeHtml(c.category)}</div>
