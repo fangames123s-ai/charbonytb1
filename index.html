@@ -6,56 +6,66 @@
 <title>Charbon Youtube</title>
 <style>
   :root {
-    --bg: #0A0A0A;
-    --bg-soft: #121212;
-    --card: #181818;
-    --card-hover: #212121;
-    --orange: #FF7A1A;
-    --orange-dim: #D9600E;
-    --text: #F0EEEA;
-    --muted: #8F8B85;
-    --border: #2A2A2A;
+    --bg: #14100D;
+    --bg-soft: #1C1712;
+    --card: #221B15;
+    --card-hover: #2B2219;
+    --ember: #FF6A1F;
+    --ember-deep: #C9490F;
+    --ember-glow: #FFA766;
+    --text: #F3ECE3;
+    --muted: #A79A8B;
+    --border: #362B21;
     --danger: #E5564B;
   }
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
-  .serif { font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif; }
-  a { color: var(--orange); }
+  a { color: var(--ember); }
   button { cursor: pointer; font-family: inherit; border: none; }
   input, textarea {
     width: 100%;
     background: var(--bg-soft);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 10px 12px;
+    padding: 11px 13px;
     color: var(--text);
     font-size: 15px;
     font-family: inherit;
     outline: none;
   }
-  input:focus, textarea:focus { border-color: var(--orange); }
+  input:focus, textarea:focus { border-color: var(--ember); }
   label.field { display: block; margin-bottom: 16px; }
   label.field span { display: block; margin-bottom: 6px; font-size: 13px; color: var(--muted); }
   .btn-primary {
-    background: var(--orange);
+    background: var(--ember);
     color: #1A0900;
-    font-weight: 600;
+    font-weight: 700;
     border-radius: 6px;
-    padding: 10px 20px;
+    padding: 11px 22px;
+    letter-spacing: 0.2px;
   }
+  .btn-primary:hover { background: var(--ember-glow); }
   .btn-secondary {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.08);
     color: var(--text);
     border-radius: 6px;
-    padding: 10px 20px;
+    padding: 11px 22px;
   }
+  .btn-secondary:hover { background: rgba(255,255,255,0.14); }
   .error-text { color: var(--danger); font-size: 14px; margin-bottom: 14px; }
-  .link-btn { background: none; text-decoration: underline; color: var(--orange); padding: 0; }
+  .link-btn { background: none; text-decoration: underline; color: var(--ember); padding: 0; font-size: inherit; }
+
+  .offline-banner {
+    background: #3A2412; color: var(--ember-glow); font-size: 13px;
+    text-align: center; padding: 8px 16px; border-bottom: 1px solid var(--border);
+  }
 
   .auth-wrap {
     min-height: 100vh;
@@ -63,95 +73,153 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background: radial-gradient(ellipse at top, #1a0e05 0%, var(--bg) 55%);
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, rgba(255,106,31,0.16), transparent 60%),
+      var(--bg);
   }
-  .auth-box {
-    width: 100%;
-    max-width: 380px;
-  }
-  .auth-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 28px;
-  }
-  .logo { font-size: 30px; font-weight: 700; color: var(--orange); letter-spacing: -0.5px; }
+  .auth-box { width: 100%; max-width: 380px; }
+  .auth-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 30px; }
+  .logo { font-weight: 900; letter-spacing: -0.5px; color: var(--text); }
+  .logo span { color: var(--ember); }
   .checkbox-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; color: var(--muted); font-size: 14px; }
 
   .navbar {
     position: sticky; top: 0; z-index: 20;
-    display: flex; align-items: center; justify-content: space-between;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
     padding: 16px 24px;
-    background: linear-gradient(var(--bg) 60%, transparent);
+    background: linear-gradient(var(--bg) 65%, transparent);
   }
-  .nav-left { display: flex; align-items: center; gap: 28px; }
+  .nav-left { display: flex; align-items: center; gap: 26px; }
   .nav-right { display: flex; align-items: center; gap: 16px; }
-  .icon-btn { background: none; color: var(--text); padding: 4px; display: flex; }
-  .admin-link { display: flex; align-items: center; gap: 6px; background: none; color: var(--text); font-size: 14px; }
+  .icon-btn { background: none; color: var(--text); padding: 4px; display: flex; font-size: 17px; opacity: 0.85; }
+  .icon-btn:hover { opacity: 1; }
+  .admin-link { display: flex; align-items: center; gap: 6px; background: rgba(255,106,31,0.12); color: var(--ember-glow); font-size: 13px; padding: 7px 12px; border-radius: 20px; font-weight: 600; }
+  .admin-link:hover { background: rgba(255,106,31,0.2); }
 
-  .hero { position: relative; width: 100%; height: 420px; margin-bottom: 36px; background-color: var(--card); background-size: cover; background-position: center; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 24px 22px; }
+  .chip {
+    background: var(--card); color: var(--muted); border: 1px solid var(--border);
+    padding: 7px 16px; border-radius: 20px; font-size: 13px; font-weight: 500;
+  }
+  .chip.active { background: var(--ember); color: #1A0900; border-color: var(--ember); font-weight: 700; }
+  .chip:hover:not(.active) { border-color: var(--ember-deep); color: var(--text); }
+
+  .hero { position: relative; width: 100%; height: 460px; margin-bottom: 30px; background-color: var(--card); background-size: cover; background-position: center; }
   .hero-shade { position: absolute; inset: 0;
-    background: linear-gradient(to top, var(--bg) 5%, transparent 60%), linear-gradient(to right, var(--bg) 15%, transparent 55%); }
-  .hero-content { position: absolute; bottom: 40px; left: 24px; max-width: 560px; }
-  .hero-cat { color: var(--orange); font-size: 13px; margin-bottom: 8px; }
-  .hero-title { font-size: 40px; line-height: 1.1; margin: 0; }
-  .hero-desc { color: var(--muted); font-size: 14px; margin-top: 12px; line-height: 1.5; }
-  .hero-actions { display: flex; gap: 12px; margin-top: 20px; }
-  .hero-actions button { display: flex; align-items: center; gap: 8px; }
+    background: linear-gradient(to top, var(--bg) 8%, transparent 62%), linear-gradient(to right, var(--bg) 18%, transparent 55%); }
+  .hero-content { position: absolute; bottom: 44px; left: 24px; max-width: 580px; }
+  .hero-cat { color: var(--ember-glow); font-size: 13px; margin-bottom: 10px; font-weight: 600; }
+  .hero-title { font-size: 42px; line-height: 1.08; margin: 0; font-weight: 800; letter-spacing: -0.5px; }
+  .hero-desc { color: var(--muted); font-size: 14.5px; margin-top: 14px; line-height: 1.55; }
+  .hero-actions { display: flex; gap: 12px; margin-top: 22px; }
+  .hero-actions button { display: flex; align-items: center; gap: 8px; font-size: 15px; }
 
   .content { padding: 0 24px 60px; }
-  .row { margin-bottom: 40px; }
-  .row h2 { font-size: 18px; font-weight: 600; margin: 0 0 12px; }
-  .row-track { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; }
-  .conf-card { flex-shrink: 0; width: 256px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); background: var(--card); text-align: left; transition: transform .2s ease; }
-  .conf-card:hover { transform: scale(1.05); z-index: 5; position: relative; }
-  .conf-thumb { width: 100%; height: 144px; background-color: var(--card); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 12px; }
-  .conf-info { padding: 10px 12px; }
-  .conf-info .title { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .conf-info .cat { font-size: 12px; color: var(--orange); margin-top: 3px; }
+  .row { margin-bottom: 38px; }
+  .row h2 { font-size: 18px; font-weight: 700; margin: 0 0 14px; }
+  .row-track { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 12px; scroll-snap-type: x proximity; }
+  .grid-track { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+  .conf-card {
+    flex-shrink: 0; width: 256px; border-radius: 9px; overflow: hidden; border: 1px solid var(--border);
+    background: var(--card); text-align: left; transition: transform .18s ease, border-color .18s ease;
+    scroll-snap-align: start;
+  }
+  .grid-track .conf-card { width: 100%; }
+  .conf-card:hover { transform: translateY(-4px); border-color: var(--ember-deep); z-index: 5; position: relative; }
+  .conf-thumb { width: 100%; height: 144px; background-color: #2B2219; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 12px; }
+  .conf-info { padding: 11px 13px; }
+  .conf-info .title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .conf-info .cat { font-size: 12px; color: var(--ember-glow); margin-top: 4px; }
 
   .empty-state { text-align: center; padding: 100px 20px; color: var(--muted); }
 
-  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.82); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
-  .modal-box { width: 100%; max-width: 760px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(10,7,5,0.86); display: flex; align-items: center; justify-content: center; padding: 16px; z-index: 50; }
+  .modal-box { width: 100%; max-width: 760px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
   .modal-video { position: relative; width: 100%; aspect-ratio: 16/9; background: #000; }
   .modal-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .modal-fallback { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; padding: 0 24px; color: var(--muted); }
-  .modal-body { padding: 20px; }
+  .modal-body { padding: 22px; }
   .modal-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
-  .modal-head h3 { margin: 0; font-size: 22px; }
+  .modal-head h3 { margin: 0; font-size: 22px; font-weight: 700; }
   .modal-desc { color: var(--muted); font-size: 14px; line-height: 1.6; margin-top: 12px; }
 
   .admin-wrap { max-width: 1080px; margin: 0 auto; padding: 40px 24px; }
-  .admin-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; }
-  .admin-head h1 { display: flex; align-items: center; gap: 10px; font-size: 26px; margin: 0; }
+  .admin-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; flex-wrap: wrap; gap: 12px; }
+  .admin-head h1 { display: flex; align-items: center; gap: 10px; font-size: 26px; margin: 0; font-weight: 800; }
   .admin-grid { display: grid; grid-template-columns: 1fr; gap: 28px; }
   @media (min-width: 800px) { .admin-grid { grid-template-columns: 1fr 1fr; } }
-  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 22px; }
-  .panel h2 { font-size: 16px; margin: 0 0 16px; }
-  .conf-list-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 12px; border-radius: 6px; background: var(--bg-soft); border: 1px solid var(--border); margin-bottom: 8px; }
-  .conf-list-item .title { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .conf-list-item .cat { font-size: 12px; color: var(--orange); }
-  .del-btn { background: none; color: var(--danger); padding: 6px; flex-shrink: 0; }
-  .conf-list { max-height: 420px; overflow-y: auto; }
+  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+  .panel h2 { font-size: 16px; margin: 0 0 16px; font-weight: 700; }
+  .conf-list-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 13px; border-radius: 7px; background: var(--bg-soft); border: 1px solid var(--border); margin-bottom: 8px; }
+  .conf-list-item .title { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .conf-list-item .cat { font-size: 12px; color: var(--ember-glow); }
+  .del-btn { background: none; color: var(--danger); padding: 6px; flex-shrink: 0; font-size: 16px; }
+  .conf-list { max-height: 440px; overflow-y: auto; }
+
+  ::-webkit-scrollbar { height: 8px; width: 8px; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 </style>
 </head>
 <body>
 <div id="root"></div>
 
 <script>
-/* ---------- stockage local (sur cet ordinateur / ce navigateur uniquement) ---------- */
-const STORAGE_KEYS = { users: "charbon_users", conferences: "charbon_conferences", session: "charbon_session" };
+const SYNCED = typeof window.storage !== "undefined";
+const LOCAL_KEYS = { users: "charbon_users", conferences: "charbon_conferences", session: "charbon_session" };
 
-function loadJSON(key, fallback) {
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : fallback;
-  } catch (e) { return fallback; }
+async function loadUsers() {
+  if (SYNCED) {
+    try { const r = await window.storage.get("users", true); return r && r.value ? JSON.parse(r.value) : []; }
+    catch (e) { return []; }
+  }
+  try { const raw = localStorage.getItem(LOCAL_KEYS.users); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
 }
-function saveJSON(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
+async function saveUsers(list) {
+  if (SYNCED) { try { await window.storage.set("users", JSON.stringify(list), true); } catch (e) {} return; }
+  localStorage.setItem(LOCAL_KEYS.users, JSON.stringify(list));
+}
+async function loadConferences() {
+  const defaultConferences = [
+    {
+      id: "conf-miniatures-wixuu",
+      title: "Comment faire de bonnes miniatures",
+      category: "Miniatures",
+      coverImage: "https://placehold.co/1280x720/221B15/FF6A1F?text=Comment+faire+de+bonnes+miniatures",
+      videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      description: "Conférence réalisée par Wixuu.",
+      createdAt: 1000000000000
+    }
+  ];
+  if (SYNCED) {
+    try {
+      const r = await window.storage.get("conferences", true);
+      if (r && r.value) {
+        const saved = JSON.parse(r.value);
+        if (Array.isArray(saved) && saved.length > 0) return saved;
+      }
+      await window.storage.set("conferences", JSON.stringify(defaultConferences), true);
+      return defaultConferences;
+    } catch (e) { return defaultConferences; }
+  }
+  try {
+    const raw = localStorage.getItem(LOCAL_KEYS.conferences);
+    if (raw) {
+      const saved = JSON.parse(raw);
+      if (Array.isArray(saved) && saved.length > 0) return saved;
+    }
+    localStorage.setItem(LOCAL_KEYS.conferences, JSON.stringify(defaultConferences));
+    return defaultConferences;
+  } catch (e) {
+    return defaultConferences;
+  }
+}
+async function saveConferences(list) {
+  if (SYNCED) { try { await window.storage.set("conferences", JSON.stringify(list), true); } catch (e) {} return; }
+  localStorage.setItem(LOCAL_KEYS.conferences, JSON.stringify(list));
+}
+function loadSession() { try { const r = localStorage.getItem(LOCAL_KEYS.session); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
+function saveSession(v) { if (v) localStorage.setItem(LOCAL_KEYS.session, JSON.stringify(v)); else localStorage.removeItem(LOCAL_KEYS.session); }
 
-/* ---------- hash simple du mot de passe ---------- */
 async function hashPassword(pw) {
   try {
     if (window.crypto && window.crypto.subtle) {
@@ -159,7 +227,6 @@ async function hashPassword(pw) {
       return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, "0")).join("");
     }
   } catch (e) {}
-  // repli si crypto.subtle indisponible (ex: ouverture en fichier local sur certains navigateurs)
   let h = 0;
   for (let i = 0; i < pw.length; i++) { h = (h * 31 + pw.charCodeAt(i)) >>> 0; }
   return "fallback-" + h.toString(16);
@@ -194,37 +261,54 @@ function getEmbedUrl(rawUrl) {
 
 const ADMIN_CODE = "CHARBON-ADMIN-2024";
 
-/* ---------- etat global ---------- */
 const state = {
-  users: loadJSON(STORAGE_KEYS.users, []),
-  conferences: loadJSON(STORAGE_KEYS.conferences, []),
-  currentUser: loadJSON(STORAGE_KEYS.session, null),
+  users: [],
+  conferences: [],
+  currentUser: loadSession(),
   authMode: "login",
   authError: "",
   showAdmin: false,
   search: "",
+  activeCategory: null,
   selectedConfId: null,
+  ready: false,
 };
 
 const root = document.getElementById("root");
 
-/* ---------- rendu ---------- */
+async function init() {
+  const [users, conferences] = await Promise.all([loadUsers(), loadConferences()]);
+  state.users = users;
+  state.conferences = conferences;
+  state.ready = true;
+  render();
+}
+
 function render() {
+  if (!state.ready) {
+    root.innerHTML = `<div class="auth-wrap"><p style="color:var(--muted);">Chargement...</p></div>`;
+    return;
+  }
   if (!state.currentUser) { renderAuth(); return; }
   renderApp();
+}
+
+function offlineBannerHtml() {
+  return "";
 }
 
 function renderAuth() {
   const isSignup = state.authMode === "signup";
   root.innerHTML = `
+    ${offlineBannerHtml()}
     <div class="auth-wrap">
       <div class="auth-box">
         <div style="text-align:center; margin-bottom:28px;">
-          <div class="logo">Charbon Youtube</div>
+          <div class="logo" style="font-size:30px;">Charbon<span>Youtube</span></div>
           <p style="color:var(--muted); font-size:14px; margin-top:8px;">Les conférences qui font avancer tes vidéos</p>
         </div>
         <div class="auth-card">
-          <h1 class="serif" style="font-size:20px; margin:0 0 20px;">${isSignup ? "Créer un compte" : "Se connecter"}</h1>
+          <h1 style="font-size:20px; margin:0 0 20px; font-weight:800;">${isSignup ? "Créer un compte" : "Se connecter"}</h1>
           <form id="auth-form">
             <label class="field"><span>Identifiant</span><input id="f-username" autocomplete="username" /></label>
             <label class="field"><span>Mot de passe</span><input id="f-password" type="password" autocomplete="${isSignup ? "new-password" : "current-password"}" /></label>
@@ -272,96 +356,109 @@ async function handleAuthSubmit(e) {
     if (!found || found.passwordHash !== hash) { state.authError = "Identifiant ou mot de passe incorrect."; render(); return; }
     state.authError = "";
     state.currentUser = { username: found.username, isAdmin: found.isAdmin };
-    saveJSON(STORAGE_KEYS.session, state.currentUser);
+    saveSession(state.currentUser);
     render();
   } else {
-    const confirm = document.getElementById("f-confirm").value;
+    const confirmVal = document.getElementById("f-confirm").value;
     const wantsAdmin = document.getElementById("f-wants-admin").checked;
     const adminCode = wantsAdmin ? document.getElementById("f-admin-code").value : "";
     if (password.length < 6) { state.authError = "Le mot de passe doit faire au moins 6 caractères."; render(); return; }
-    if (password !== confirm) { state.authError = "Les mots de passe ne correspondent pas."; render(); return; }
+    if (password !== confirmVal) { state.authError = "Les mots de passe ne correspondent pas."; render(); return; }
     if (wantsAdmin && adminCode !== ADMIN_CODE) { state.authError = "Code administrateur incorrect."; render(); return; }
-    if (state.users.some(u => u.username.toLowerCase() === username.toLowerCase())) { state.authError = "Cet identifiant existe déjà."; render(); return; }
+    const fresh = await loadUsers();
+    if (fresh.some(u => u.username.toLowerCase() === username.toLowerCase())) { state.authError = "Cet identifiant existe déjà."; render(); return; }
     const passwordHash = await hashPassword(password);
     const newUser = { username, passwordHash, isAdmin: wantsAdmin };
-    state.users.push(newUser);
-    saveJSON(STORAGE_KEYS.users, state.users);
+    state.users = [...fresh, newUser];
+    await saveUsers(state.users);
     state.authError = "";
     state.currentUser = { username, isAdmin: wantsAdmin };
-    saveJSON(STORAGE_KEYS.session, state.currentUser);
+    saveSession(state.currentUser);
     render();
   }
 }
 
 function logout() {
   state.currentUser = null;
-  localStorage.removeItem(STORAGE_KEYS.session);
+  saveSession(null);
   render();
 }
 
-/* ---------- app principale ---------- */
 function renderApp() {
   if (state.showAdmin) { renderAdminView(); return; }
 
   const q = state.search.trim().toLowerCase();
   const sorted = [...state.conferences].sort((a, b) => b.createdAt - a.createdAt);
-  const filtered = q ? sorted.filter(c => c.title.toLowerCase().includes(q) || c.category.toLowerCase().includes(q)) : sorted;
   const categories = [...new Set(sorted.map(c => c.category))].sort();
+  let visible = sorted;
+  if (q) visible = visible.filter(c => c.title.toLowerCase().includes(q) || c.category.toLowerCase().includes(q));
+  if (state.activeCategory) visible = visible.filter(c => c.category === state.activeCategory);
   const featured = sorted[0];
 
-  let rowsHtml = "";
+  let bodyHtml = "";
   if (sorted.length === 0) {
-    rowsHtml = `<div class="empty-state">Aucune conférence pour l'instant.${state.currentUser.isAdmin ? " Ajoute la première depuis l'espace admin." : " Reviens un peu plus tard."}</div>`;
-  } else if (q) {
-    rowsHtml = renderRowHtml(`Résultats pour "${escapeHtml(state.search)}"`, filtered);
+    bodyHtml = `<div class="empty-state">Aucune conférence pour l'instant.${state.currentUser.isAdmin ? " Ajoute la première depuis l'espace admin." : " Reviens un peu plus tard."}</div>`;
+  } else if (q || state.activeCategory) {
+    const label = q ? `Résultats pour "${escapeHtml(state.search)}"` : escapeHtml(state.activeCategory);
+    bodyHtml = visible.length
+      ? `<div class="row"><h2>${label}</h2><div class="grid-track">${visible.map(renderCardHtml).join("")}</div></div>`
+      : `<div class="empty-state">Rien à afficher ici.</div>`;
   } else {
-    rowsHtml = categories.map(cat => renderRowHtml(cat, sorted.filter(c => c.category === cat))).join("");
+    bodyHtml = categories.map(cat => renderRowHtml(cat, sorted.filter(c => c.category === cat))).join("");
   }
 
+  const chipsHtml = categories.length ? `
+    <div class="chips">
+      <button class="chip ${!state.activeCategory ? "active" : ""}" onclick="setCategory(null)">Toutes</button>
+      ${categories.map(cat => `<button class="chip ${state.activeCategory === cat ? "active" : ""}" onclick="setCategory('${cat.replace(/'/g, "\\'")}')">${escapeHtml(cat)}</button>`).join("")}
+    </div>
+  ` : "";
+
   root.innerHTML = `
+    ${offlineBannerHtml()}
     <nav class="navbar">
       <div class="nav-left">
-        <div class="logo" style="font-size:22px;">Charbon Youtube</div>
-        ${state.currentUser.isAdmin ? `<button class="admin-link" onclick="openAdmin()">🛡 Gérer</button>` : ""}
+        <div class="logo" style="font-size:22px;">Charbon<span>Youtube</span></div>
+        ${state.currentUser.isAdmin ? `<button class="admin-link" onclick="openAdmin()">Gérer</button>` : ""}
       </div>
       <div class="nav-right">
-        <input id="search-input" placeholder="Rechercher..." value="${escapeHtml(state.search)}" style="width:200px; padding:6px 10px;" oninput="handleSearch(this.value)" />
+        <input id="search-input" placeholder="Rechercher..." value="${escapeHtml(state.search)}" style="width:200px; padding:8px 12px;" oninput="handleSearch(this.value)" />
         <span style="font-size:14px; color:var(--muted);">${escapeHtml(state.currentUser.username)}</span>
-        <button class="icon-btn" onclick="logout()" title="Se déconnecter">⏻</button>
+        <button class="icon-btn" onclick="logout()" title="Se déconnecter">Quitter</button>
       </div>
     </nav>
-    ${featured && !q ? `
+    ${featured && !q && !state.activeCategory ? `
       <div class="hero" id="hero-el">
         <div class="hero-shade"></div>
         <div class="hero-content">
           <div class="hero-cat">${escapeHtml(featured.category)}</div>
-          <h1 class="hero-title serif">${escapeHtml(featured.title)}</h1>
+          <h1 class="hero-title">${escapeHtml(featured.title)}</h1>
           ${featured.description ? `<p class="hero-desc">${escapeHtml(featured.description).slice(0, 220)}</p>` : ""}
           <div class="hero-actions">
-            <button class="btn-primary" onclick="openConf('${featured.id}')">▶ Regarder</button>
-            <button class="btn-secondary" onclick="openConf('${featured.id}')">ⓘ Plus d'infos</button>
+            <button class="btn-primary" onclick="openConf('${featured.id}')">Regarder</button>
+            <button class="btn-secondary" onclick="openConf('${featured.id}')">Plus d'infos</button>
           </div>
         </div>
       </div>
     ` : ""}
-    <div class="content">${rowsHtml}</div>
+    ${chipsHtml}
+    <div class="content">${bodyHtml}</div>
     <div id="modal-root"></div>
   `;
 
-  if (featured && !q && featured.coverImage) {
-    document.getElementById("hero-el").style.backgroundImage = `url(${JSON.stringify(featured.coverImage).slice(1, -1)})`;
+  if (featured && !q && !state.activeCategory && featured.coverImage) {
+    document.getElementById("hero-el").style.backgroundImage = "url(" + JSON.stringify(featured.coverImage).slice(1, -1) + ")";
   }
   document.querySelectorAll(".conf-thumb[data-cover]").forEach(elm => {
     const cover = elm.getAttribute("data-cover");
-    if (cover) elm.style.backgroundImage = `url(${JSON.stringify(cover).slice(1, -1)})`;
+    if (cover) elm.style.backgroundImage = "url(" + JSON.stringify(cover).slice(1, -1) + ")";
   });
 
   renderModal();
 }
 
-function renderRowHtml(title, items) {
-  if (!items.length) return "";
-  const cards = items.map(c => `
+function renderCardHtml(c) {
+  return `
     <button class="conf-card" onclick="openConf('${c.id}')">
       <div class="conf-thumb" data-cover="${escapeHtml(c.coverImage)}">${c.coverImage ? "" : "Pas d'image"}</div>
       <div class="conf-info">
@@ -369,15 +466,21 @@ function renderRowHtml(title, items) {
         <div class="cat">${escapeHtml(c.category)}</div>
       </div>
     </button>
-  `).join("");
-  return `<div class="row"><h2>${escapeHtml(title)}</h2><div class="row-track">${cards}</div></div>`;
+  `;
 }
+
+function renderRowHtml(title, items) {
+  if (!items.length) return "";
+  return `<div class="row"><h2>${escapeHtml(title)}</h2><div class="row-track">${items.map(renderCardHtml).join("")}</div></div>`;
+}
+
+function setCategory(cat) { state.activeCategory = cat; renderApp(); }
 
 function handleSearch(value) {
   state.search = value;
-  const active = document.activeElement && document.activeElement.id === "search-input";
+  const wasFocused = document.activeElement && document.activeElement.id === "search-input";
   renderApp();
-  if (active) {
+  if (wasFocused) {
     const inp = document.getElementById("search-input");
     inp.focus();
     inp.selectionStart = inp.selectionEnd = inp.value.length;
@@ -404,10 +507,10 @@ function renderModal() {
         <div class="modal-body">
           <div class="modal-head">
             <div>
-              <h3 class="serif">${escapeHtml(conf.title)}</h3>
+              <h3>${escapeHtml(conf.title)}</h3>
               <div class="hero-cat" style="margin-top:6px;">${escapeHtml(conf.category)}</div>
             </div>
-            <button class="icon-btn" onclick="closeConf()">✕</button>
+            <button class="icon-btn" onclick="closeConf()">Fermer</button>
           </div>
           ${conf.description ? `<p class="modal-desc">${escapeHtml(conf.description)}</p>` : ""}
         </div>
@@ -416,16 +519,16 @@ function renderModal() {
   `;
 }
 
-/* ---------- espace admin ---------- */
 function openAdmin() { state.showAdmin = true; render(); }
 function closeAdmin() { state.showAdmin = false; render(); }
 
 function renderAdminView() {
   const sorted = [...state.conferences].sort((a, b) => b.createdAt - a.createdAt);
   root.innerHTML = `
+    ${offlineBannerHtml()}
     <div class="admin-wrap">
       <div class="admin-head">
-        <h1 class="serif">🛡 Gestion des conférences</h1>
+        <h1>Gestion des conférences</h1>
         <button class="link-btn" onclick="closeAdmin()">Retour au site</button>
       </div>
       <div class="admin-grid">
@@ -438,7 +541,7 @@ function renderAdminView() {
             <label class="field"><span>Lien vidéo (YouTube ou Vimeo)</span><input id="c-video" placeholder="https://www.youtube.com/watch?v=..." /></label>
             <label class="field"><span>Description</span><textarea id="c-desc" style="min-height:80px;"></textarea></label>
             <div id="add-conf-error"></div>
-            <button type="submit" class="btn-primary" style="width:100%;">+ Ajouter</button>
+            <button type="submit" class="btn-primary" style="width:100%;">Ajouter</button>
           </form>
         </div>
         <div class="panel">
@@ -450,7 +553,7 @@ function renderAdminView() {
                   <div class="title">${escapeHtml(c.title)}</div>
                   <div class="cat">${escapeHtml(c.category)}</div>
                 </div>
-                <button class="del-btn" onclick="deleteConf('${c.id}')">🗑</button>
+                <button class="del-btn" onclick="deleteConf('${c.id}')">Suppr.</button>
               </div>
             `).join("")}
           </div>
@@ -461,7 +564,7 @@ function renderAdminView() {
   document.getElementById("add-conf-form").addEventListener("submit", handleAddConf);
 }
 
-function handleAddConf(e) {
+async function handleAddConf(e) {
   e.preventDefault();
   const title = document.getElementById("c-title").value.trim();
   const category = document.getElementById("c-category").value.trim();
@@ -473,21 +576,24 @@ function handleAddConf(e) {
     errBox.innerHTML = `<p class="error-text">Titre, catégorie et lien vidéo sont obligatoires.</p>`;
     return;
   }
-  state.conferences.push({
+  const fresh = await loadConferences();
+  fresh.push({
     id: (crypto.randomUUID ? crypto.randomUUID() : "id-" + Date.now() + "-" + Math.random().toString(16).slice(2)),
     title, category, coverImage, videoUrl, description, createdAt: Date.now(),
   });
-  saveJSON(STORAGE_KEYS.conferences, state.conferences);
+  state.conferences = fresh;
+  await saveConferences(fresh);
   renderAdminView();
 }
 
-function deleteConf(id) {
-  state.conferences = state.conferences.filter(c => c.id !== id);
-  saveJSON(STORAGE_KEYS.conferences, state.conferences);
+async function deleteConf(id) {
+  const fresh = (await loadConferences()).filter(c => c.id !== id);
+  state.conferences = fresh;
+  await saveConferences(fresh);
   renderAdminView();
 }
 
-render();
+init();
 </script>
 </body>
 </html>
