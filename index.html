@@ -184,7 +184,7 @@ async function loadConferences() {
       id: "conf-miniatures-wixuu",
       title: "Comment faire de bonnes miniatures",
       category: "Miniatures",
-      coverImage: "https://img.magnific.com/photos-gratuite/gros-plan-beau-papillon-textures-interessantes-fleur-petale-orange_181624-7640.jpg?semt=ais_hybrid&w=740&q=80",
+      coverImage: "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
       videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
       description: "Conférence réalisée par Wixuu.",
       createdAt: 1000000000000
@@ -234,6 +234,20 @@ async function hashPassword(pw) {
 
 function escapeHtml(str) {
   return String(str || "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function getYoutubeThumbnail(rawUrl) {
+  if (!rawUrl) return "";
+  try {
+    const u = new URL(rawUrl.trim());
+    const host = u.hostname.replace(/^www\./, "");
+    let id = "";
+    if (host === "youtu.be") id = u.pathname.split("/").filter(Boolean)[0] || "";
+    if (host === "youtube.com" || host === "m.youtube.com") {
+      id = u.searchParams.get("v") || (u.pathname.startsWith("/shorts/") ? u.pathname.split("/")[2] : "") || (u.pathname.startsWith("/live/") ? u.pathname.split("/")[2] : "");
+    }
+    return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : "";
+  } catch (e) { return ""; }
 }
 
 function getEmbedUrl(rawUrl) {
@@ -446,12 +460,13 @@ function renderApp() {
     <div id="modal-root"></div>
   `;
 
-  if (featured && !q && !state.activeCategory && featured.coverImage) {
-    document.getElementById("hero-el").style.backgroundImage = "url(" + JSON.stringify(featured.coverImage).slice(1, -1) + ")";
+  if (featured && !q && !state.activeCategory) {
+    const heroCover = featured.coverImage || getYoutubeThumbnail(featured.videoUrl);
+    if (heroCover) document.getElementById("hero-el").style.backgroundImage = `url("${heroCover}")`;
   }
   document.querySelectorAll(".conf-thumb[data-cover]").forEach(elm => {
     const cover = elm.getAttribute("data-cover");
-    if (cover) elm.style.backgroundImage = "url(" + JSON.stringify(cover).slice(1, -1) + ")";
+    if (cover) elm.style.backgroundImage = `url("${cover}")`;
   });
 
   renderModal();
@@ -460,7 +475,7 @@ function renderApp() {
 function renderCardHtml(c) {
   return `
     <button class="conf-card" onclick="openConf('${c.id}')">
-      <div class="conf-thumb" data-cover="${escapeHtml(c.coverImage)}">${c.coverImage ? "" : "Pas d'image"}</div>
+      <div class="conf-thumb" data-cover="${escapeHtml(c.coverImage || getYoutubeThumbnail(c.videoUrl))}">${c.coverImage || getYoutubeThumbnail(c.videoUrl) ? "" : "Pas d'image"}</div>
       <div class="conf-info">
         <div class="title">${escapeHtml(c.title)}</div>
         <div class="cat">${escapeHtml(c.category)}</div>
