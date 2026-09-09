@@ -120,16 +120,32 @@
   .row-track { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 12px; scroll-snap-type: x proximity; }
   .grid-track { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
   .conf-card {
-    flex-shrink: 0; width: 256px; border-radius: 9px; overflow: hidden; border: 1px solid var(--border);
-    background: var(--card); text-align: left; transition: transform .18s ease, border-color .18s ease;
-    scroll-snap-align: start;
+    position: relative;
+    flex-shrink: 0; width: 256px; border-radius: 9px; overflow: hidden; border: 2px solid var(--border);
+    background: var(--card); text-align: left; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    scroll-snap-align: start; animation: cardIn .35s ease both;
   }
   .grid-track .conf-card { width: 100%; }
-  .conf-card:hover { transform: translateY(-4px); border-color: var(--ember-deep); z-index: 5; position: relative; }
-  .conf-thumb { width: 100%; height: 144px; background-color: #2B2219; background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 12px; }
+  .conf-card:hover, .conf-card:focus-visible {
+    transform: translateY(-6px);
+    border-color: var(--ember);
+    box-shadow: 0 10px 28px rgba(255,106,31,0.28);
+    z-index: 5; position: relative;
+  }
+  .conf-thumb {
+    width: 100%; height: 144px; background-color: #2B2219; background-size: cover; background-position: center;
+    display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 12px;
+    transition: transform .3s ease; transform: scale(1);
+  }
+  .conf-card:hover .conf-thumb { transform: scale(1.06); }
   .conf-info { padding: 11px 13px; }
   .conf-info .title { color: #fff; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .conf-info .cat { font-size: 12px; color: var(--ember-glow); margin-top: 4px; }
+  .conf-badge {
+    position: absolute; top: 8px; left: 8px; background: var(--ember); color: #1A0900;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.4px; padding: 3px 8px; border-radius: 4px;
+  }
+  @keyframes cardIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
   .empty-state { text-align: center; padding: 100px 20px; color: var(--muted); }
 
@@ -467,7 +483,10 @@ function renderApp() {
         ${state.currentUser.isAdmin ? `<button class="admin-link" onclick="openAdmin()">Gérer</button>` : ""}
       </div>
       <div class="nav-right">
-        <input id="search-input" placeholder="Rechercher..." value="${escapeHtml(state.search)}" style="width:200px; padding:8px 12px;" oninput="handleSearch(this.value)" />
+        <div style="position:relative; width:200px;">
+          <input id="search-input" placeholder="Rechercher..." value="${escapeHtml(state.search)}" style="padding:8px 30px 8px 12px;" oninput="handleSearch(this.value)" />
+          ${state.search ? `<button class="icon-btn" onclick="handleSearch('')" style="position:absolute; right:4px; top:50%; transform:translateY(-50%); font-size:13px; padding:2px 6px;">×</button>` : ""}
+        </div>
         <span style="font-size:14px; color:var(--muted);">${escapeHtml(state.currentUser.username)}</span>
         <button class="icon-btn" onclick="logout()" title="Se déconnecter">Quitter</button>
       </div>
@@ -504,8 +523,10 @@ function renderApp() {
 }
 
 function renderCardHtml(c) {
+  const isNew = c.createdAt && (Date.now() - c.createdAt) < 7 * 24 * 60 * 60 * 1000;
   return `
     <button class="conf-card" onclick="openConf('${c.id}')">
+      ${isNew ? `<div class="conf-badge">Nouveau</div>` : ""}
       <div class="conf-thumb" data-cover="${escapeHtml(getYoutubeThumbnail(c.videoUrl) || c.coverImage)}">${getYoutubeThumbnail(c.videoUrl) || c.coverImage ? "" : "Pas d'image"}</div>
       <div class="conf-info">
         <div class="title">${escapeHtml(c.title)}</div>
@@ -638,6 +659,10 @@ async function deleteConf(id) {
   await saveConferences(fresh);
   renderAdminView();
 }
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && state.selectedConfId) closeConf();
+});
 
 init();
 </script>
