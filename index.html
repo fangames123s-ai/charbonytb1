@@ -9,7 +9,6 @@
     --bg: #14100D;
     --bg-soft: #1C1712;
     --card: #221B15;
-    --card-hover: #2B2219;
     --ember: #FF6A1F;
     --ember-deep: #C9490F;
     --ember-glow: #FFA766;
@@ -29,7 +28,7 @@
   }
   a { color: var(--ember); }
   button { cursor: pointer; font-family: inherit; border: none; }
-  input, textarea {
+  input {
     width: 100%;
     background: var(--bg-soft);
     border: 1px solid var(--border);
@@ -40,7 +39,7 @@
     font-family: inherit;
     outline: none;
   }
-  input:focus, textarea:focus { border-color: var(--ember); }
+  input:focus { border-color: var(--ember); }
   label.field { display: block; margin-bottom: 16px; }
   label.field span { display: block; margin-bottom: 6px; font-size: 13px; color: var(--muted); }
   .btn-primary {
@@ -62,11 +61,6 @@
   .error-text { color: var(--danger); font-size: 14px; margin-bottom: 14px; }
   .link-btn { background: none; text-decoration: underline; color: var(--ember); padding: 0; font-size: inherit; }
 
-  .offline-banner {
-    background: #3A2412; color: var(--ember-glow); font-size: 13px;
-    text-align: center; padding: 8px 16px; border-bottom: 1px solid var(--border);
-  }
-
   .auth-wrap {
     min-height: 100vh;
     display: flex;
@@ -81,7 +75,6 @@
   .auth-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 30px; }
   .logo { font-weight: 900; letter-spacing: -0.5px; color: var(--text); }
   .logo span { color: var(--ember); }
-  .checkbox-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; color: var(--muted); font-size: 14px; }
 
   .navbar {
     position: sticky; top: 0; z-index: 20;
@@ -89,12 +82,9 @@
     padding: 16px 24px;
     background: linear-gradient(var(--bg) 65%, transparent);
   }
-  .nav-left { display: flex; align-items: center; gap: 26px; }
   .nav-right { display: flex; align-items: center; gap: 16px; }
-  .icon-btn { background: none; color: var(--text); padding: 4px; display: flex; font-size: 17px; opacity: 0.85; }
+  .icon-btn { background: none; color: var(--text); padding: 4px; display: flex; font-size: 14px; opacity: 0.85; }
   .icon-btn:hover { opacity: 1; }
-  .admin-link { display: flex; align-items: center; gap: 6px; background: rgba(255,106,31,0.12); color: var(--ember-glow); font-size: 13px; padding: 7px 12px; border-radius: 20px; font-weight: 600; }
-  .admin-link:hover { background: rgba(255,106,31,0.2); }
 
   .chips { display: flex; gap: 8px; flex-wrap: wrap; padding: 0 24px 22px; }
   .chip {
@@ -130,7 +120,7 @@
     transform: translateY(-6px);
     border-color: var(--ember);
     box-shadow: 0 10px 28px rgba(255,106,31,0.28);
-    z-index: 5; position: relative;
+    z-index: 5;
   }
   .conf-thumb {
     width: 100%; height: 144px; background-color: #2B2219; background-size: cover; background-position: center;
@@ -143,7 +133,7 @@
   .conf-info .cat { font-size: 12px; color: var(--ember-glow); margin-top: 4px; }
   .conf-badge {
     position: absolute; top: 8px; left: 8px; background: var(--ember); color: #1A0900;
-    font-size: 10px; font-weight: 800; letter-spacing: 0.4px; padding: 3px 8px; border-radius: 4px;
+    font-size: 10px; font-weight: 800; letter-spacing: 0.4px; padding: 3px 8px; border-radius: 4px; z-index: 2;
   }
   @keyframes cardIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -159,111 +149,53 @@
   .modal-head h3 { margin: 0; font-size: 22px; font-weight: 700; }
   .modal-desc { color: var(--muted); font-size: 14px; line-height: 1.6; margin-top: 12px; }
 
-  .admin-wrap { max-width: 1080px; margin: 0 auto; padding: 40px 24px; }
-  .admin-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 30px; flex-wrap: wrap; gap: 12px; }
-  .admin-head h1 { display: flex; align-items: center; gap: 10px; font-size: 26px; margin: 0; font-weight: 800; }
-  .admin-grid { display: grid; grid-template-columns: 1fr; gap: 28px; }
-  @media (min-width: 800px) { .admin-grid { grid-template-columns: 1fr 1fr; } }
-  .panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
-  .panel h2 { font-size: 16px; margin: 0 0 16px; font-weight: 700; }
-  .conf-list-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 13px; border-radius: 7px; background: var(--bg-soft); border: 1px solid var(--border); margin-bottom: 8px; }
-  .conf-list-item .title { color: #fff; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .conf-list-item .cat { font-size: 12px; color: var(--ember-glow); }
-  .del-btn { background: none; color: var(--danger); padding: 6px; flex-shrink: 0; font-size: 16px; }
-  .conf-list { max-height: 440px; overflow-y: auto; }
-
   ::-webkit-scrollbar { height: 8px; width: 8px; }
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-</style>
-<style>
-/* Responsive PC + mobile */
-html, body { width: 100%; overflow-x: hidden; }
-body { -webkit-text-size-adjust: 100%; }
-.container, .app-shell, main, .content { width: 100%; box-sizing: border-box; }
-img, iframe, video { max-width: 100%; }
-button, input, select, textarea { max-width: 100%; box-sizing: border-box; }
 
-@media (min-width: 901px) {
-  .container { max-width: 1200px; margin: 0 auto; padding-left: 28px; padding-right: 28px; }
-  .grid, .conferences-grid, .cards-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
-}
-
-@media (max-width: 900px) {
-  .container { padding-left: 18px; padding-right: 18px; }
-  .grid, .conferences-grid, .cards-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-  .hero { min-height: 360px; }
-}
-
-@media (max-width: 600px) {
-  .container { padding-left: 12px; padding-right: 12px; }
-  header, nav { flex-wrap: wrap; }
-  .grid, .conferences-grid, .cards-grid { grid-template-columns: 1fr; gap: 12px; }
-  .hero { min-height: 300px; padding: 20px; }
-  .hero h1 { font-size: clamp(26px, 8vw, 42px); line-height: 1.08; }
-  .hero p { font-size: 14px; }
-  .card, .conference-card { width: 100%; min-width: 0; }
-  .modal, .modal-content { width: calc(100vw - 24px); max-width: none; margin: 12px; }
-  iframe { width: 100%; aspect-ratio: 16 / 9; height: auto; }
-  input, select, textarea, button { font-size: 16px; }
-}
+  @media (max-width: 900px) {
+    .grid-track { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .hero { height: 380px; }
+    .hero-title { font-size: 32px; }
+  }
+  @media (max-width: 600px) {
+    .navbar { padding: 12px 16px; }
+    .content { padding: 0 16px 40px; }
+    .chips { padding: 0 16px 18px; }
+    .grid-track { grid-template-columns: 1fr; }
+    .hero { height: 340px; }
+    .hero-content { left: 16px; right: 16px; max-width: none; }
+    .hero-title { font-size: 26px; }
+    input { font-size: 16px; }
+  }
 </style>
 </head>
 <body>
 <div id="root"></div>
 
 <script>
-const SYNCED = typeof window.storage !== "undefined";
-const LOCAL_KEYS = { users: "charbon_users", conferences: "charbon_conferences", session: "charbon_session" };
+/* =========================================================================
+   LES CONFERENCES SONT ICI, EN DUR DANS LE CODE (plus de bouton "Gérer",
+   donc plus aucun risque de suppression accidentelle).
+   Pour en ajouter une : copie un bloc { ... } ci-dessous et modifie les
+   valeurs. Pour en retirer une : supprime son bloc.
+   L'ordre de la liste = l'ordre d'affichage. Le premier élément devient
+   la conférence mise en avant dans le bandeau du haut.
+   ========================================================================= */
+const CONFERENCES = [
+  {
+    id: "conf-miniatures-wixuu",
+    title: "Comment faire de bonnes miniatures",
+    category: "Montage",
+    coverImage: "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
+    videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    description: "Conférence réalisée par Wixuu.",
+  },
+];
 
-async function loadUsers() {
-  if (SYNCED) {
-    try { const r = await window.storage.get("users", true); return r && r.value ? JSON.parse(r.value) : []; }
-    catch (e) { return []; }
-  }
-  try { const raw = localStorage.getItem(LOCAL_KEYS.users); return raw ? JSON.parse(raw) : []; } catch (e) { return []; }
-}
-async function saveUsers(list) {
-  if (SYNCED) { try { await window.storage.set("users", JSON.stringify(list), true); } catch (e) {} return; }
-  localStorage.setItem(LOCAL_KEYS.users, JSON.stringify(list));
-}
-async function loadConferences() {
-  const defaultConferences = [
-    {
-      id: "conf-miniatures-wixuu",
-      title: "Comment faire de bonnes miniatures",
-            coverImage: "https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg",
-      videoUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-      description: "Conférence réalisée par Wixuu.",
-      createdAt: 1000000000000
-    }
-  ];
-  if (SYNCED) {
-    try {
-      const r = await window.storage.get("conferences", true);
-      if (r && r.value) {
-        const saved = JSON.parse(r.value);
-        if (Array.isArray(saved) && saved.length > 0) return saved;
-      }
-      await window.storage.set("conferences", JSON.stringify(defaultConferences), true);
-      return defaultConferences;
-    } catch (e) { return defaultConferences; }
-  }
-  try {
-    const raw = localStorage.getItem(LOCAL_KEYS.conferences);
-    if (raw) {
-      const saved = JSON.parse(raw);
-      if (Array.isArray(saved) && saved.length > 0) return saved;
-    }
-    localStorage.setItem(LOCAL_KEYS.conferences, JSON.stringify(defaultConferences));
-    return defaultConferences;
-  } catch (e) {
-    return defaultConferences;
-  }
-}
-async function saveConferences(list) {
-  if (SYNCED) { try { await window.storage.set("conferences", JSON.stringify(list), true); } catch (e) {} return; }
-  localStorage.setItem(LOCAL_KEYS.conferences, JSON.stringify(list));
-}
+/* ---------- comptes utilisateurs (juste pour l'accès, stockés localement dans le navigateur) ---------- */
+const LOCAL_KEYS = { users: "charbon_users", session: "charbon_session" };
+function loadUsers() { try { const r = localStorage.getItem(LOCAL_KEYS.users); return r ? JSON.parse(r) : []; } catch (e) { return []; } }
+function saveUsers(list) { localStorage.setItem(LOCAL_KEYS.users, JSON.stringify(list)); }
 function loadSession() { try { const r = localStorage.getItem(LOCAL_KEYS.session); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
 function saveSession(v) { if (v) localStorage.setItem(LOCAL_KEYS.session, JSON.stringify(v)); else localStorage.removeItem(LOCAL_KEYS.session); }
 
@@ -320,48 +252,25 @@ function getEmbedUrl(rawUrl) {
   return null;
 }
 
-const ADMIN_CODE = "CHARBON-ADMIN-2024";
-
 const state = {
-  users: [],
-  conferences: [],
   currentUser: loadSession(),
   authMode: "login",
   authError: "",
-  showAdmin: false,
   search: "",
   activeCategory: null,
   selectedConfId: null,
-  ready: false,
 };
 
 const root = document.getElementById("root");
 
-async function init() {
-  const [users, conferences] = await Promise.all([loadUsers(), loadConferences()]);
-  state.users = users;
-  state.conferences = conferences;
-  state.ready = true;
-  render();
-}
-
 function render() {
-  if (!state.ready) {
-    root.innerHTML = `<div class="auth-wrap"><p style="color:var(--muted);">Chargement...</p></div>`;
-    return;
-  }
   if (!state.currentUser) { renderAuth(); return; }
   renderApp();
-}
-
-function offlineBannerHtml() {
-  return "";
 }
 
 function renderAuth() {
   const isSignup = state.authMode === "signup";
   root.innerHTML = `
-    ${offlineBannerHtml()}
     <div class="auth-wrap">
       <div class="auth-box">
         <div style="text-align:center; margin-bottom:28px;">
@@ -373,13 +282,7 @@ function renderAuth() {
           <form id="auth-form">
             <label class="field"><span>Identifiant</span><input id="f-username" autocomplete="username" /></label>
             <label class="field"><span>Mot de passe</span><input id="f-password" type="password" autocomplete="${isSignup ? "new-password" : "current-password"}" /></label>
-            ${isSignup ? `
-              <label class="field"><span>Confirmer le mot de passe</span><input id="f-confirm" type="password" /></label>
-              <div class="checkbox-row"><input type="checkbox" id="f-wants-admin" onchange="toggleAdminField()" /> Créer un compte administrateur</div>
-              <div id="admin-code-field" style="display:none;">
-                <label class="field"><span>Code administrateur</span><input id="f-admin-code" /></label>
-              </div>
-            ` : ""}
+            ${isSignup ? `<label class="field"><span>Confirmer le mot de passe</span><input id="f-confirm" type="password" /></label>` : ""}
             ${state.authError ? `<p class="error-text">${escapeHtml(state.authError)}</p>` : ""}
             <button type="submit" class="btn-primary" style="width:100%;">${isSignup ? "Créer le compte" : "Se connecter"}</button>
           </form>
@@ -394,11 +297,6 @@ function renderAuth() {
   document.getElementById("auth-form").addEventListener("submit", handleAuthSubmit);
 }
 
-function toggleAdminField() {
-  const box = document.getElementById("f-wants-admin");
-  document.getElementById("admin-code-field").style.display = box.checked ? "block" : "none";
-}
-
 function switchAuthMode() {
   state.authMode = state.authMode === "login" ? "signup" : "login";
   state.authError = "";
@@ -410,30 +308,26 @@ async function handleAuthSubmit(e) {
   const username = document.getElementById("f-username").value.trim();
   const password = document.getElementById("f-password").value;
   if (!username || !password) { state.authError = "Renseigne un identifiant et un mot de passe."; render(); return; }
+  const users = loadUsers();
 
   if (state.authMode === "login") {
     const hash = await hashPassword(password);
-    const found = state.users.find(u => u.username.toLowerCase() === username.toLowerCase());
+    const found = users.find(u => u.username.toLowerCase() === username.toLowerCase());
     if (!found || found.passwordHash !== hash) { state.authError = "Identifiant ou mot de passe incorrect."; render(); return; }
     state.authError = "";
-    state.currentUser = { username: found.username, isAdmin: found.isAdmin };
+    state.currentUser = { username: found.username };
     saveSession(state.currentUser);
     render();
   } else {
     const confirmVal = document.getElementById("f-confirm").value;
-    const wantsAdmin = document.getElementById("f-wants-admin").checked;
-    const adminCode = wantsAdmin ? document.getElementById("f-admin-code").value : "";
     if (password.length < 6) { state.authError = "Le mot de passe doit faire au moins 6 caractères."; render(); return; }
     if (password !== confirmVal) { state.authError = "Les mots de passe ne correspondent pas."; render(); return; }
-    if (wantsAdmin && adminCode !== ADMIN_CODE) { state.authError = "Code administrateur incorrect."; render(); return; }
-    const fresh = await loadUsers();
-    if (fresh.some(u => u.username.toLowerCase() === username.toLowerCase())) { state.authError = "Cet identifiant existe déjà."; render(); return; }
+    if (users.some(u => u.username.toLowerCase() === username.toLowerCase())) { state.authError = "Cet identifiant existe déjà."; render(); return; }
     const passwordHash = await hashPassword(password);
-    const newUser = { username, passwordHash, isAdmin: wantsAdmin };
-    state.users = [...fresh, newUser];
-    await saveUsers(state.users);
+    users.push({ username, passwordHash });
+    saveUsers(users);
     state.authError = "";
-    state.currentUser = { username, isAdmin: wantsAdmin };
+    state.currentUser = { username };
     saveSession(state.currentUser);
     render();
   }
@@ -446,29 +340,26 @@ function logout() {
 }
 
 function renderApp() {
-  if (state.showAdmin) { renderAdminView(); return; }
-
   const q = state.search.trim().toLowerCase();
-  const sorted = [...state.conferences].sort((a, b) => b.createdAt - a.createdAt);
-  const categories = [...new Set(sorted.map(c => c.category))].sort();
-  let visible = sorted;
-  if (q) visible = visible.filter(c => c.title.toLowerCase().includes(q) || c.category.toLowerCase().includes(q));
-  if (state.activeCategory) visible = visible.filter(c => c.category === state.activeCategory);
-  const featured = sorted[0];
+  const categories = [...new Set(CONFERENCES.map(c => c.category || "Sans catégorie"))];
+  let visible = CONFERENCES;
+  if (q) visible = visible.filter(c => c.title.toLowerCase().includes(q) || (c.category || "").toLowerCase().includes(q));
+  if (state.activeCategory) visible = visible.filter(c => (c.category || "Sans catégorie") === state.activeCategory);
+  const featured = CONFERENCES[0];
 
   let bodyHtml = "";
-  if (sorted.length === 0) {
-    bodyHtml = `<div class="empty-state">Aucune conférence pour l'instant.${state.currentUser.isAdmin ? " Ajoute la première depuis l'espace admin." : " Reviens un peu plus tard."}</div>`;
+  if (CONFERENCES.length === 0) {
+    bodyHtml = `<div class="empty-state">Aucune conférence pour l'instant.</div>`;
   } else if (q || state.activeCategory) {
     const label = q ? `Résultats pour "${escapeHtml(state.search)}"` : escapeHtml(state.activeCategory);
     bodyHtml = visible.length
       ? `<div class="row"><h2>${label}</h2><div class="grid-track">${visible.map(renderCardHtml).join("")}</div></div>`
       : `<div class="empty-state">Rien à afficher ici.</div>`;
   } else {
-    bodyHtml = categories.map(cat => renderRowHtml(cat, sorted.filter(c => c.category === cat))).join("");
+    bodyHtml = categories.map(cat => renderRowHtml(cat, CONFERENCES.filter(c => (c.category || "Sans catégorie") === cat))).join("");
   }
 
-  const chipsHtml = categories.length ? `
+  const chipsHtml = categories.length > 1 ? `
     <div class="chips">
       <button class="chip ${!state.activeCategory ? "active" : ""}" onclick="setCategory(null)">Toutes</button>
       ${categories.map(cat => `<button class="chip ${state.activeCategory === cat ? "active" : ""}" onclick="setCategory('${cat.replace(/'/g, "\\'")}')">${escapeHtml(cat)}</button>`).join("")}
@@ -476,12 +367,8 @@ function renderApp() {
   ` : "";
 
   root.innerHTML = `
-    ${offlineBannerHtml()}
     <nav class="navbar">
-      <div class="nav-left">
-        <div class="logo" style="font-size:22px;">Charbon<span>Youtube</span></div>
-        ${state.currentUser.isAdmin ? `<button class="admin-link" onclick="openAdmin()">Gérer</button>` : ""}
-      </div>
+      <div class="logo" style="font-size:22px;">Charbon<span>Youtube</span></div>
       <div class="nav-right">
         <div style="position:relative; width:200px;">
           <input id="search-input" placeholder="Rechercher..." value="${escapeHtml(state.search)}" style="padding:8px 30px 8px 12px;" oninput="handleSearch(this.value)" />
@@ -495,7 +382,7 @@ function renderApp() {
       <div class="hero" id="hero-el">
         <div class="hero-shade"></div>
         <div class="hero-content">
-          <div class="hero-cat">${escapeHtml(featured.category)}</div>
+          <div class="hero-cat">${escapeHtml(featured.category || "")}</div>
           <h1 class="hero-title">${escapeHtml(featured.title)}</h1>
           ${featured.description ? `<p class="hero-desc">${escapeHtml(featured.description).slice(0, 220)}</p>` : ""}
           <div class="hero-actions">
@@ -523,14 +410,13 @@ function renderApp() {
 }
 
 function renderCardHtml(c) {
-  const isNew = c.createdAt && (Date.now() - c.createdAt) < 7 * 24 * 60 * 60 * 1000;
+  const cover = getYoutubeThumbnail(c.videoUrl) || c.coverImage;
   return `
     <button class="conf-card" onclick="openConf('${c.id}')">
-      ${isNew ? `<div class="conf-badge">Nouveau</div>` : ""}
-      <div class="conf-thumb" data-cover="${escapeHtml(getYoutubeThumbnail(c.videoUrl) || c.coverImage)}">${getYoutubeThumbnail(c.videoUrl) || c.coverImage ? "" : "Pas d'image"}</div>
+      <div class="conf-thumb" data-cover="${escapeHtml(cover)}">${cover ? "" : "Pas d'image"}</div>
       <div class="conf-info">
         <div class="title">${escapeHtml(c.title)}</div>
-        <div class="cat">${escapeHtml(c.category)}</div>
+        <div class="cat">${escapeHtml(c.category || "Sans catégorie")}</div>
       </div>
     </button>
   `;
@@ -560,7 +446,7 @@ function closeConf() { state.selectedConfId = null; renderModal(); }
 function renderModal() {
   const holder = document.getElementById("modal-root");
   if (!holder) return;
-  const conf = state.conferences.find(c => c.id === state.selectedConfId);
+  const conf = CONFERENCES.find(c => c.id === state.selectedConfId);
   if (!conf) { holder.innerHTML = ""; return; }
   const embed = getEmbedUrl(conf.videoUrl);
   holder.innerHTML = `
@@ -575,7 +461,7 @@ function renderModal() {
           <div class="modal-head">
             <div>
               <h3>${escapeHtml(conf.title)}</h3>
-              <div class="hero-cat" style="margin-top:6px;">${escapeHtml(conf.category)}</div>
+              <div class="hero-cat" style="margin-top:6px;">${escapeHtml(conf.category || "")}</div>
             </div>
             <button class="icon-btn" onclick="closeConf()">Fermer</button>
           </div>
@@ -586,85 +472,11 @@ function renderModal() {
   `;
 }
 
-function openAdmin() { state.showAdmin = true; render(); }
-function closeAdmin() { state.showAdmin = false; render(); }
-
-function renderAdminView() {
-  const sorted = [...state.conferences].sort((a, b) => b.createdAt - a.createdAt);
-  root.innerHTML = `
-    ${offlineBannerHtml()}
-    <div class="admin-wrap">
-      <div class="admin-head">
-        <h1>Gestion des conférences</h1>
-        <button class="link-btn" onclick="closeAdmin()">Retour au site</button>
-      </div>
-      <div class="admin-grid">
-        <div class="panel">
-          <h2>Ajouter une conférence</h2>
-          <form id="add-conf-form">
-            <label class="field"><span>Titre</span><input id="c-title" /></label>
-            <label class="field"><span>Catégorie</span><input id="c-category" placeholder="Ex : Montage, Growth, Storytelling" /></label>
-            <label class="field"><span>Image de couverture (URL)</span><input id="c-cover" placeholder="https://..." /></label>
-            <label class="field"><span>Lien vidéo (YouTube ou Vimeo)</span><input id="c-video" placeholder="https://www.youtube.com/watch?v=..." /></label>
-            <label class="field"><span>Description</span><textarea id="c-desc" style="min-height:80px;"></textarea></label>
-            <div id="add-conf-error"></div>
-            <button type="submit" class="btn-primary" style="width:100%;">Ajouter</button>
-          </form>
-        </div>
-        <div class="panel">
-          <h2>Conférences en ligne (${sorted.length})</h2>
-          <div class="conf-list">
-            ${sorted.length === 0 ? `<p style="color:var(--muted); font-size:14px;">Rien pour l'instant.</p>` : sorted.map(c => `
-              <div class="conf-list-item">
-                <div style="min-width:0;">
-                  <div class="title">${escapeHtml(c.title)}</div>
-                  <div class="cat">${escapeHtml(c.category)}</div>
-                </div>
-                <button class="del-btn" onclick="deleteConf('${c.id}')">Suppr.</button>
-              </div>
-            `).join("")}
-          </div>
-        </div>
-      </div>
-    </div>
-  `;
-  document.getElementById("add-conf-form").addEventListener("submit", handleAddConf);
-}
-
-async function handleAddConf(e) {
-  e.preventDefault();
-  const title = document.getElementById("c-title").value.trim();
-  const category = document.getElementById("c-category").value.trim();
-  const coverImage = document.getElementById("c-cover").value.trim();
-  const videoUrl = document.getElementById("c-video").value.trim();
-  const description = document.getElementById("c-desc").value.trim();
-  const errBox = document.getElementById("add-conf-error");
-  if (!title || !category || !videoUrl) {
-    errBox.innerHTML = `<p class="error-text">Titre, catégorie et lien vidéo sont obligatoires.</p>`;
-    return;
-  }
-  const fresh = await loadConferences();
-  fresh.push({
-    id: (crypto.randomUUID ? crypto.randomUUID() : "id-" + Date.now() + "-" + Math.random().toString(16).slice(2)),
-    title, category, coverImage, videoUrl, description, createdAt: Date.now(),
-  });
-  state.conferences = fresh;
-  await saveConferences(fresh);
-  renderAdminView();
-}
-
-async function deleteConf(id) {
-  const fresh = (await loadConferences()).filter(c => c.id !== id);
-  state.conferences = fresh;
-  await saveConferences(fresh);
-  renderAdminView();
-}
-
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && state.selectedConfId) closeConf();
 });
 
-init();
+render();
 </script>
 </body>
 </html>
